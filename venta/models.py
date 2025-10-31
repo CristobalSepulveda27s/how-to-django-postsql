@@ -19,7 +19,7 @@ class Cliente(models.Model):
 
 class Venta(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.PROTECT)
-    fecha = models.DateTimeField(auto_now_add=True)
+    fecha = models.DateTimeField(default="now")
     anulada = models.BooleanField(default=False)
     
     @property
