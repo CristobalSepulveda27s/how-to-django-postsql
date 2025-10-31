@@ -1,34 +1,37 @@
 from django.contrib import admin
 from .models import Producto, Cliente, Venta, DetalleVenta
 
-@admin.register(Producto)
-class ProductoAdmin(admin.ModelAdmin):
-    list_display = ("nombre", "sku", "precio", "stock", "activo")
-    search_fields = ("nombre", "sku") # texto rápido
-    list_filter = ("activo",) # filtros laterales
-    ordering = ("nombre",)
-    list_per_page = 25
-    autocomplete_fields = () # ej.: ("categoria",) si existiera FK grande
-    
-@admin.register(Cliente)
-class ClienteAdmin(admin.ModelAdmin):
-    list_display = ("nombre", "email")
-    search_fields = ("nombre", "email")
-    
 class DetalleVentaInline(admin.TabularInline):
     model = DetalleVenta
     extra = 1
-    autocomplete_fields = ("producto",)
-    readonly_fields = ("subtotal",)
-    
+    autocomplete_fields = ['producto']
+
+@admin.register(Producto)
+class ProductoAdmin(admin.ModelAdmin):
+    list_display = ['nombre', 'sku', 'precio', 'stock', 'activo']
+    list_editable = ['precio', 'stock', 'activo']
+    list_filter = ['activo']
+    search_fields = ['nombre', 'sku']
+    ordering = ['nombre']
+
+@admin.register(Cliente)
+class ClienteAdmin(admin.ModelAdmin):
+    list_display = ['nombre', 'email']
+    search_fields = ['nombre']
+
 @admin.register(Venta)
 class VentaAdmin(admin.ModelAdmin):
-    date_hierarchy = "fecha"
-    list_display = ("id", "cliente", "fecha", "anulada", "total_display")
-    search_fields = ("cliente__nombre", "id") # lookups a relacionadas
-    list_filter = ("anulada",)
+    list_display = ['id', 'cliente', 'fecha', 'anulada', 'total']
+    list_filter = ['anulada', 'fecha']
     inlines = [DetalleVentaInline]
+    autocomplete_fields = ['cliente']
     
-    @admin.display(description="Total", ordering="id")
-    def total_display(self, obj):
-        return f"${obj.total:,.0f}"
+    def get_readonly_fields(self, request, obj=None):
+        if obj:  # Al editar
+            return ['fecha']
+        return []
+
+@admin.register(DetalleVenta)
+class DetalleVentaAdmin(admin.ModelAdmin):
+    list_display = ['venta', 'producto', 'cantidad', 'precio_unitario', 'subtotal']
+    autocomplete_fields = ['producto']
