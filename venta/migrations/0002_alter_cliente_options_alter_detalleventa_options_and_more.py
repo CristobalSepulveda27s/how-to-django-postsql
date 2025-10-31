@@ -37,8 +37,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='cliente',
             name='creado',
-            field=models.DateTimeField(auto_now_add=True, default=django.utils.timezone.now, verbose_name='Fecha de registro'),
-            preserve_default=False,
+            field=models.DateTimeField(auto_now_add=True, verbose_name='Fecha de registro'),
         ),
         migrations.AddField(
             model_name='cliente',
@@ -53,8 +52,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='producto',
             name='creado',
-            field=models.DateTimeField(auto_now_add=True, default='now', verbose_name='Fecha de creación'),
-            preserve_default=False,
+            field=models.DateTimeField(auto_now_add=True, verbose_name='Fecha de creación'),
         ),
         migrations.AddField(
             model_name='venta',
@@ -129,6 +127,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='venta',
             name='fecha',
-            field=models.DateTimeField(auto_now_add=True, verbose_name='Fecha de venta'),
+            field=models.DateTimeField(default=django.utils.timezone.now, verbose_name='Fecha de venta'),
         ),
     ]

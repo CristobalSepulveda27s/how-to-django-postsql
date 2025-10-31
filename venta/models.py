@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 class Producto(models.Model):
     nombre = models.CharField(max_length=120, db_index=True)
@@ -19,7 +20,7 @@ class Cliente(models.Model):
 
 class Venta(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.PROTECT)
-    fecha = models.DateTimeField(default="now")
+    fecha = models.DateTimeField(default=timezone.now)
     anulada = models.BooleanField(default=False)
     
     @property
