@@ -27,7 +27,7 @@ class VentaAdmin(admin.ModelAdmin):
     autocomplete_fields = ['cliente']
     
     def get_readonly_fields(self, request, obj=None):
-        if obj:  # Al editar
+        if obj:  
             return ['fecha']
         return []
 
