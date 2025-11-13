@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'venta'
+    'main',
+    'venta',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -80,17 +82,23 @@ WSGI_APPLICATION = 'main.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": os.getenv("dbname"),
+#         "USER": os.getenv("user"),
+#         "PASSWORD": os.getenv("password"),
+#         "HOST": os.getenv("host"),
+#         "PORT": os.getenv("port"),   
+#     }
+# }
+
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("dbname"),
-        "USER": os.getenv("user"),
-        "PASSWORD": os.getenv("password"),
-        "HOST": os.getenv("host"),
-        "PORT": os.getenv("port"),   
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": "db",
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
